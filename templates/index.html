@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Heart Disease Prediction</title>
+
+    <style>
+        .container-custom {
+            background-color: #f9f9f9;
+            width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-custom {
+            width: 100%;
+        }
+
+        #prediction-toast {
+            z-index: 1050;
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translate(-50%, -50%) rotate(-3deg);
+            animation: tilt 0.3s ease-in-out;
+        }
+
+        @keyframes tilt {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(-3deg);
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light navbar-expand-lg py-3">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="fas fa-heartbeat me-2 text-primary mx-2"></i>
+            Heart Disease Prediction
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase text-dark mx-2" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase text-dark mx-2" href="https://github.com/HimaMaddala/heart_disease_mp_stage4" target="_blank">GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase text-dark mx-2" href="https://archive.ics.uci.edu/datasets"
+                        target="_blank">Dataset</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase text-dark mx-2" href="#">Prediction</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase text-dark mx-2" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-section position-relative text-light"
+        style="background-color: #000; height: 100vh; overflow: hidden;">
+
+        <div class="hero-image"
+            style="background: url('/static/hero_bg_image.png') center/cover no-repeat; opacity: 0.4; height: 100%; width: 100%; position: absolute; top: 0; left: 0;">
+        </div>
+        <div class="container h-100 d-flex flex-column justify-content-center align-items-center text-center"
+            style="position: relative; z-index: 100;">
+            <h1 class="display-4 fw-bold">Heart Disease Prediction</h1>
+            <p class="lead">Empowering individuals with accurate and free heart disease risk assessment.</p>
+            <div class="mt-3">
+                <a href="#features" class="btn btn-primary btn-lg me-2">Learn More</a>
+                <a href="#predict" class="btn btn-outline-light btn-lg">Predict</a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow">
+                        <div class="card-body">
+                            <i class="fa fa-mobile-alt fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Mobile Optimize</h5>
+                            <p class="card-text text-muted">
+                                Optimized for viewing on different platforms and devices. Looks the same on every
+                                mobile, laptop, PC, and tablet.
+                            </p>
+                            <a href="#" class="btn btn-link text-primary">
+                                Learn More <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow">
+                        <div class="card-body">
+                            <i class="fa fa-wallet fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Decrease Costs</h5>
+                            <p class="card-text text-muted">
+                                Examine your heart-related reports yourself. Predict the chance of having heart disease
+                                free of cost.
+                            </p>
+                            <a href="#" class="btn btn-link text-primary">
+                                Learn More <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow">
+                        <div class="card-body">
+                            <i class="fa fa-lightbulb fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Smart Idea</h5>
+                            <p class="card-text text-muted">
+                                Great accuracy. Accurate prediction rates. Analysis and prediction based on large
+                                samples of data.
+                            </p>
+                            <a href="#" class="btn btn-link text-primary">
+                                Learn More <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="probootstrap-section probootstrap-bg-light" id="features">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-md-8 offset-md-2 probootstrap-section-heading">
+                    <h2 class="my-3 text-black">How we do</h2>
+                    <p class="text-muted">
+                        We collect, preprocess, analyze, build, test, and predict with utmost care to deliver accurate
+                        heart disease predictions and improve lives.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col">
+                    <img src="/static/UCI_website.png" alt="Dataset Collection" class="img-fluid probootstrap-shadow">
+                </div>
+                <div class="col-md-4 mt-4">
+                    <h3 class="text-primary">Heart Disease Dataset</h3>
+                    <p>This dataset, sourced from the UCI website, consists of 14 key attributes and 1025 rows,
+                        carefully selected for building an effective heart disease prediction model.</p>
+                    <ul class="list-unstyled">
+                        <li>Dataset sourced from UCI repository</li>
+                        <li>Contains 14 attributes and 1025 rows</li>
+                        <li>Used for developing prediction model</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="row mb-5" style="margin-top: 100px;">
+                <div class="col-md-4 mt-4">
+                    <h3 class="text-primary">Analysis and Code</h3>
+                    <p>Explore the dataset and code used for analysis and prediction. Access the subset of attributes
+                        and results to get detailed insights.</p>
+                    <ul class="list-unstyled">
+                        <li>Dataset from <a href="http://archive.ics.uci.edu/ml/datasets/Heart+Disease"
+                                target="_blank">UCI Repository</a></li>
+                        <li>Subset of 14 key attributes</li>
+                        <li>Machine learning-ready dataset</li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <img src="/static/jupyter_code.png" alt="Dataset" class="img-fluid probootstrap-shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="d-flex flex-wrap align-items-start" id="predict">
+        <div class="col-md-4 border">
+            <div class="card card-custom p-4 mb-3">
+                <h5 class="card-title text-primary"><i class="fas fa-info-circle"></i> Input Information</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Age:</strong> Enter your age in years (e.g., 25-100).</li>
+                    <li class="list-group-item"><strong>Sex:</strong> Select "Male" or "Female."</li>
+                    <li class="list-group-item"><strong>Chest Pain Type:</strong>
+                        <ul>
+                            <li>0: Typical Angina</li>
+                            <li>1: Atypical Angina</li>
+                            <li>2: Non-anginal Pain</li>
+                            <li>3: Asymptomatic</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item"><strong>Resting Blood Pressure:</strong> Normal range is 90-180 mmHg.
+                    </li>
+                    <li class="list-group-item"><strong>Cholesterol:</strong> Enter serum cholesterol in mg/dL (normal:
+                        <200 mg/dL).</li>
+                    <li class="list-group-item"><strong>Fasting Blood Sugar:</strong> High if >120 mg/dL (1 = High, 0 =
+                        Normal).</li>
+                    <li class="list-group-item"><strong>Rest ECG:</strong>
+                        <ul>
+                            <li>0: Normal</li>
+                            <li>1: ST-T wave abnormality</li>
+                            <li>2: Left ventricular hypertrophy</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item"><strong>Max Heart Rate:</strong> Enter the maximum heart rate achieved
+                        (normal: 60-220 bpm).</li>
+                    <li class="list-group-item"><strong>Exercise Induced Angina:</strong> 1 = Yes, 0 = No.</li>
+                    <li class="list-group-item"><strong>Oldpeak:</strong> ST depression relative to rest, e.g., 0.0-6.0.
+                    </li>
+                    <li class="list-group-item"><strong>Slope:</strong>
+                        <ul>
+                            <li>0: Upsloping</li>
+                            <li>1: Flat</li>
+                            <li>2: Downsloping</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item"><strong>CA:</strong> Number of major vessels (0-3) seen via fluoroscopy.
+                    </li>
+                    <li class="list-group-item"><strong>Thal:</strong>
+                        <ul>
+                            <li>0: Normal</li>
+                            <li>1: Fixed defect</li>
+                            <li>2: Reversible defect</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-8 border">
+            <div class="container-fluid my-5 pt-3">
+                <div class="col-lg-8 offset-lg-2">
+                    <form id="prediction-form">
+                        <div class="container-custom">
+                            <div class="form-group mb-3">
+                                <label for="age" class="form-label">Age:</label>
+                                <input type="number" class="form-control" id="age" name="age" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="sex" class="form-label">Sex:</label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sex" id="male" value="1"
+                                            required>
+                                        <label class="form-check-label" for="male">
+                                            <i class="fas fa-male fa-lg text-primary"></i> Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check px-5">
+                                        <input class="form-check-input" type="radio" name="sex" id="female" value="0">
+                                        <label class="form-check-label" for="female">
+                                            <i class="fas fa-female fa-lg text-danger"></i> Female
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="cp" class="form-label">Chest Pain Type:</label>
+                                <select class="form-select" id="cp" name="cp" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="0">Type 0</option>
+                                    <option value="1">Type 1</option>
+                                    <option value="2">Type 2</option>
+                                    <option value="3">Type 3</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="trestbps" class="form-label">Resting Blood Pressure:</label>
+                                <input type="number" class="form-control" id="trestbps" name="trestbps" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="chol" class="form-label">Cholesterol:</label>
+                                <input type="number" class="form-control" id="chol" name="chol" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="fbs" class="form-label">Fasting Blood Sugar:</label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="fbs" id="fbs-yes" value="1"
+                                            required>
+                                        <label class="form-check-label" for="fbs-yes">Yes</label>
+                                    </div>
+                                    <div class="form-check px-5">
+                                        <input class="form-check-input" type="radio" name="fbs" id="fbs-no" value="0">
+                                        <label class="form-check-label" for="fbs-no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="restecg" class="form-label">Rest ECG:</label>
+                                <select class="form-select" id="restecg" name="restecg" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="0">Normal-0</option>
+                                    <option value="1">Abnormality-1</option>
+                                    <option value="2">Hypertrophy-2</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="thalach" class="form-label">Max Heart Rate:</label>
+                                <input type="number" class="form-control" id="thalach" name="thalach" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="exang" class="form-label">Exercise Induced Angina:</label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exang" id="exang-yes"
+                                            value="1" required>
+                                        <label class="form-check-label" for="exang-yes">Yes</label>
+                                    </div>
+                                    <div class="form-check px-5">
+                                        <input class="form-check-input" type="radio" name="exang" id="exang-no"
+                                            value="0">
+                                        <label class="form-check-label" for="exang-no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="oldpeak" class="form-label">Oldpeak:</label>
+                                <input type="number" class="form-control" id="oldpeak" name="oldpeak" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="slope" class="form-label">Slope:</label>
+                                <select class="form-select" id="slope" name="slope" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="0">Type 0</option>
+                                    <option value="1">Type 1</option>
+                                    <option value="2">Type 2</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="ca" class="form-label">CA:</label>
+                                <input type="number" class="form-control" id="ca" name="ca" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="thal" class="form-label">Thal:</label>
+                                <select class="form-select" id="thal" name="thal" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="0">Normal-0</option>
+                                    <option value="1">Fixed Defect-1</option>
+                                    <option value="2">Reversible Defect-2</option>
+                                    <option value="3">Other-3</option>
+                                </select>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark btn-lg">
+                                    <i class="fas fa-heartbeat"></i> Predict
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <div id="prediction-toast" class="toast align-items-center text-white border-0" role="alert"
+                        aria-live="assertive" aria-atomic="true"
+                        style="position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%); display: none; padding: 1rem;">
+                        <div class="d-flex">
+                            <div id="toast-message" class="toast-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-custom p-4">
+                    <h2 class="card-title text-danger text-center mb-3"><i class="fas fa-heartbeat"></i> Precaution</h2>
+                    <p class="card-text">
+                        We recommend consulting a certified <strong>cardiologist</strong> immediately. A cardiologist
+                        can help diagnose the severity of your condition and suggest the best course of action.
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-stethoscope text-primary"></i> Schedule a
+                            comprehensive heart check-up.</li>
+                        <li class="list-group-item"><i class="fas fa-prescription-bottle text-success"></i> Follow
+                            prescribed medications and therapies.</li>
+                        <li class="list-group-item"><i class="fas fa-hand-holding-medical text-warning"></i> Avoid
+                            self-medication or delay in treatment.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6 text-center mt-4">
+                <img src="/static/doctor_heart.png" alt="Doctor Consultation" class="img-fluid tips-img">
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card card-custom p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-carrot text-warning"></i> <strong>Eat a balanced diet</strong> rich
+                                    in fruits, vegetables, whole grains, and lean protein.</li>
+                                <li><i class="fas fa-walking text-primary"></i> <strong>Exercise regularly</strong> (30
+                                    minutes of moderate exercise daily).</li>
+                                <li><i class="fas fa-smile text-info"></i> <strong>Manage stress</strong> through
+                                    meditation or yoga.</li>
+                                <li><i class="fas fa-smoking-ban text-danger"></i> <strong>Avoid smoking</strong> and
+                                    excessive alcohol consumption.</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-weight text-secondary"></i> Maintain a healthy weight.</li>
+                                <li><i class="fas fa-clock text-success"></i> <strong>Get enough sleep</strong> (7-8
+                                    hours per night).</li>
+                                <li><i class="fas fa-syringe text-warning"></i> Monitor and control your blood pressure
+                                    and cholesterol levels.</li>
+                                <li><i class="fas fa-water text-primary"></i> Stay hydrated throughout the day.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p class="mb-2">© 2024 Heart Disease Prediction. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="#" class="text-light mx-2"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-light mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-light mx-2"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-light mx-2"><i class="fab fa-github"></i></a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function () {
+            $('#prediction-form').on('submit', function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+
+                $.post('/predict', formData, function (response) {
+                    const isDiseaseDetected = response.result === "Heart Disease Detected";
+                    const toast = $('#prediction-toast');
+                    const toastMessage = $('#toast-message');
+
+                    if (isDiseaseDetected) {
+                        toast.removeClass('bg-success').addClass('bg-danger'); // Red for disease detected
+                    } else {
+                        toast.removeClass('bg-danger').addClass('bg-success'); // Green for no disease
+                    }
+
+                    // prediction notification
+                    toastMessage.text(response.result);
+                    toast.fadeIn(400).delay(3000).fadeOut(400);
+                }).fail(function (xhr) {
+                    // Handle errors
+                    $('#toast-message').text("An error occurred: " + xhr.responseJSON.result);
+                    $('#prediction-toast').removeClass('bg-success bg-danger').addClass('bg-warning').fadeIn(400).delay(3000).fadeOut(400);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
